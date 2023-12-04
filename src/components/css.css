@@ -1,0 +1,67 @@
+body {
+  background-image: linear-gradient(to bottom right, #836FFF, #483D8B);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100vh;
+}
+
+.header {
+  background-image: linear-gradient(to bottom right, #fcb3fc, #FFF);
+  text-align: center;
+  margin-bottom: 40px;
+  border-bottom: 5px #FFF solid;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.containerQuestion {
+  text-align: center;
+  margin-top: 70px;
+}
+
+.subTitle {
+  margin-bottom: 20px;
+}
+
+.inputText {
+  margin-bottom: 20px;
+}
+
+.spinner {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.spinnerLabel{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.completeQuestion {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.question {
+  color: black;
+  width: 100%;
+  word-break: normal;
+  background-image: linear-gradient(to bottom right, #fcb3fc, #FFF);
+}
+
+.options {
+  margin: 3px 0px;
+  border-radius: 10px;
+}
+
+.sendResult {
+  margin: 20px;
+  text-align: center;
+  bot: 10px
+}
+
+.heeeee {
+  background-color: #000
+}
