@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Header from './Header'
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
+import { create } from '../backend/bot';
 
 function Home() {
 
@@ -19,13 +20,10 @@ function Home() {
     setShowResult(true);
     setFinalGrade(0);
     let rightAnswers = 0;
-    console.log(questions)
     questions.forEach((question, index) => {
       const question1 = document.getElementsByName(`group${index}`);
       for (let i=0; i<question1.length; i++) if (question1[i].checked) if(question1[i].id === question.rightAnswer) {
         rightAnswers++;
-        console.log(question)
-        console.log(question1[i].id)
       }
     })
     setFinalGrade(rightAnswers)
@@ -33,9 +31,15 @@ function Home() {
 
   const onShowResultsDetails = () => {}
 
-  const callBackend = () => {
+  const callBackend = async () => {
+    setSpinner(true);
     const inputQuestion = document.getElementById('inputQuestion');
-    axios.get('http://localhost:4000/test', {
+    await create(inputQuestion).then(completeString => {
+      setQuestions(completeString);
+      setSpinner(false);
+    });
+
+    /*axios.get('http://localhost:4000/test', {
       params: {
         content: inputQuestion.value
       }
@@ -48,14 +52,8 @@ function Home() {
     })
     .catch(function (e) {
       console.log(e)
-    })
-
-    setSpinner(true);
+    })*/
   }
-  
-  useEffect(() => {
-    console.log(finalGrade)
-  }, [finalGrade])
 
   return (
     <>
@@ -144,9 +142,6 @@ function Home() {
           questions ? <Container className='sendResult'>
           <Button variant="light" onClick={() => onSubmit()}>Entregar prova e calcular resultado</Button>{' '}
           </Container> : <></>
-        }
-        {
-          finalGrade !== 0 ? <Container>{finalGrade}</Container> : <></>
         }
       </Container>
       <Modal show={showResults} onHide={handleClose}>
