@@ -1,4 +1,4 @@
-import OpenAI from "openai";
+//import OpenAI from "openai";
 //import * as dotenv from "dotenv";
 //dotenv.config();
 
@@ -17,8 +17,7 @@ export async function create(content) {
     temperature: 0
   });
 
-  const perguntas = chat.choices[0].message.content;
-  console.log(perguntas);*/
+  const perguntas = chat.choices[0].message.content;*/
   const message2 = `1. Qual é a raiz quadrada de 64?
   A) 6
   B) 7
@@ -163,8 +162,6 @@ export async function create(content) {
      'rightAnswer': rightAnswer
     });
   })
-
-  //console.log(finalObj);
 
   return finalObj;
 }

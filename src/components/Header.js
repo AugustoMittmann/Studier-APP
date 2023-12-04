@@ -7,7 +7,7 @@ function Header() {
   return (
     <>
       <Container fluid className='header'>
-        <h1>Studier 2.0</h1>
+        <h1>Studier</h1>
       </Container>
     </>
   );

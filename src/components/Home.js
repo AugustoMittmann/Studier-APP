@@ -1,9 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css.css';
 import { Container, Badge, Button, Form, ListGroup, Spinner } from 'react-bootstrap'
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Header from './Header'
-import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import { create } from '../backend/bot';
 
@@ -38,21 +37,6 @@ function Home() {
       setQuestions(completeString);
       setSpinner(false);
     });
-
-    /*axios.get('http://localhost:4000/test', {
-      params: {
-        content: inputQuestion.value
-      }
-    })
-    .then(function (response) {
-      console.log(response.data)
-      setQuestions(response.data);
-      setSpinner(false)
-      return;
-    })
-    .catch(function (e) {
-      console.log(e)
-    })*/
   }
 
   return (
@@ -84,7 +68,6 @@ function Home() {
                   <Form>
                     <ListGroup.Item className='options'>
                       <Form.Check
-                        onChange={e => console.log(e)}
                         type={'radio'}
                         id={`A`}
                         name={`group${index}`}
@@ -94,7 +77,6 @@ function Home() {
                     </ListGroup.Item>
                     <ListGroup.Item className='options'>
                       <Form.Check
-                        onChange={e => console.log(e)}
                         type={'radio'}
                         id={`B`}
                         name={`group${index}`}
@@ -104,7 +86,6 @@ function Home() {
                     </ListGroup.Item>
                     <ListGroup.Item className='options'>
                       <Form.Check
-                        onChange={e => console.log(e)}
                         type={'radio'}
                         id={`C`}
                         name={`group${index}`}
@@ -114,7 +95,6 @@ function Home() {
                     </ListGroup.Item>
                     <ListGroup.Item className='options'>
                       <Form.Check
-                        onChange={e => console.log(e)}
                         type={'radio'}
                         id={`D`}
                         name={`group${index}`}
@@ -124,7 +104,6 @@ function Home() {
                     </ListGroup.Item>
                     <ListGroup.Item className={`options `}>
                       <Form.Check
-                        onChange={e => e.target.classList.add("heeeee")}
                         type={'radio'}
                         id={`E`}
                         name={`group${index}`}
