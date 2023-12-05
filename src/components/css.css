@@ -6,14 +6,23 @@ body {
 }
 
 .header {
-  background-image: linear-gradient(to bottom right, #fcb3fc, #FFF);
-  text-align: center;
-  margin-bottom: 40px;
+  background-image: linear-gradient(to bottom right, #836FFF, #483D8B);
   border-bottom: 5px #FFF solid;
   position: fixed;
   top: 0;
-  left: 0;
   z-index: 1;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 95% 5%;
+}
+.headerName {
+  margin-left: 1%;
+  grid-template-columns: 100px 100px 100px 100px;
+  color: white;
+}
+.headerButton {
+  margin: 8%;
+  grid-template-columns: 1fr 2fr;
 }
 
 .containerQuestion {
@@ -60,8 +69,4 @@ body {
   margin: 20px;
   text-align: center;
   bot: 10px
-}
-
-.heeeee {
-  background-color: #000
 }
