@@ -34,6 +34,7 @@ function Home() {
     setSpinner(true);
     const inputQuestion = document.getElementById('inputQuestion');
     axios.get('https://studier-server.onrender.com/test', {
+    //axios.get('http://localhost:4000/test', {
       params: {
         content: inputQuestion.value
       }
@@ -47,9 +48,7 @@ function Home() {
     .catch(function (e) {
       console.log(e)
     })
-
     setSpinner(true);
-    
   }
 
 

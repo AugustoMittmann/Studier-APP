@@ -2,15 +2,29 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Modal, Form } from 'react-bootstrap'
 import './css.css';
 import { useState } from 'react';
+import axios from 'axios';
 
 function Header() {
   const[loginModal, setLoginModal] = useState();
 
   const handleSubmit = () => {
-    const usuario = document.getElementById('formBasicUser');
-    const senha = document.getElementById('formBasicPassword');
-    console.log(usuario.value);
-    console.log(senha.value)
+    const name = document.getElementById('formBasicUser');
+    const password = document.getElementById('formBasicPassword');
+
+    axios.get('https://studier-server.onrender.com/create', {
+      //axios.get('http://localhost:4000/create', {
+        params: {
+          name: name.value,
+          password: password.value
+        }
+      })
+      .then(function (response) {
+        setLoginModal(false)
+        return;
+      })
+      .catch(function (e) {
+        console.log(e)
+      })
   };
 
   return (
