@@ -33,8 +33,8 @@ function Home() {
   const callBackend = () => {
     setSpinner(true);
     const inputQuestion = document.getElementById('inputQuestion');
-    axios.get('https://studier-server.onrender.com/test', {
-    //axios.get('http://localhost:4000/test', {
+    axios.get('https://studier-server.onrender.com/question', {
+    //axios.get('http://localhost:4000/question', {
       params: {
         content: inputQuestion.value
       }

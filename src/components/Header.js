@@ -5,21 +5,57 @@ import { useState } from 'react';
 import axios from 'axios';
 
 function Header() {
-  const[loginModal, setLoginModal] = useState();
+  const[loginModal, setLoginModal] = useState(false);
+  const[logado, setLogado] = useState(false);
 
-  const handleSubmit = () => {
+  const onClickCreate = () => {
     const name = document.getElementById('formBasicUser');
     const password = document.getElementById('formBasicPassword');
+    if(name === '' || password === '') {
+      alert("Preencha todos os campos");
+      return;
+    }
 
-    axios.get('https://studier-server.onrender.com/create', {
-      //axios.get('http://localhost:4000/create', {
+      //axios.get('https://studier-server.onrender.com/create', {
+      axios.get('http://localhost:4000/create', {
         params: {
           name: name.value,
           password: password.value
         }
       })
       .then(function (response) {
-        setLoginModal(false)
+        if(response.data === false) {
+          alert("Usuário já existe")
+        } else {
+          alert("Usuário criado");
+          setLoginModal(false);
+          setLogado(true);
+        }
+        return;
+      })
+      .catch(function (e) {
+        console.log(e)
+      })
+  };
+  const onClickLogin = () => {
+    const name = document.getElementById('formBasicUser');
+    const password = document.getElementById('formBasicPassword');
+
+      axios.get('https://studier-server.onrender.com/login', {
+      //axios.get('http://localhost:4000/login', {
+        params: {
+          name: name.value,
+          password: password.value
+        }
+      })
+      .then(function (response) {
+        if(response.data === '') {
+          alert("Falha no login") 
+        } else {
+          alert("Login realizado")
+          setLoginModal(false)
+          setLogado(true);
+        }
         return;
       })
       .catch(function (e) {
@@ -33,9 +69,17 @@ function Header() {
           <div class="headerName">
             <h1>Studier</h1>
           </div>
-          <div class="headerButton">
-            <Button variant="light" onClick={() => setLoginModal(true)}>Login</Button>{' '}
+          {
+            logado ? <div class="headerButton">
+              <Button variant="light" id='historyButton' onClick={() => {}}>Histórico</Button>{' '}
+              <Button variant="danger" id='leaveButton' onClick={() => {
+                setLogado(false)
+                alert("Você foi desconectado") }}>Sair</Button>{' '}
+            </div>
+          : <div class="headerButton">
+            <Button variant="light" id='loginButton' onClick={() => setLoginModal(true)}>Login</Button>{' '}
           </div>
+          }
       </div>
       { loginModal ? 
       <Modal show={loginModal} onHide={() => setLoginModal(false)}>
@@ -60,8 +104,8 @@ function Header() {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="primary" onClick={handleSubmit}>Login</Button>
-          <Button variant="primary">Criar conta</Button>
+          <Button variant="primary" onClick={onClickLogin}>Login</Button>
+          <Button variant="primary" onClick={onClickCreate}>Criar conta</Button>
         </Modal.Footer>
       </Modal>
       : <></>
