@@ -2,7 +2,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Modal, Form } from 'react-bootstrap'
 import './css.css';
 import { useState } from 'react';
-//import mysql from 'mysql2';
 
 function Header() {
   const[loginModal, setLoginModal] = useState();

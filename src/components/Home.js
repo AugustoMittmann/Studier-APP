@@ -4,7 +4,7 @@ import { Container, Badge, Button, Form, ListGroup, Spinner } from 'react-bootst
 import { useState } from 'react';
 import Header from './Header'
 import Modal from 'react-bootstrap/Modal';
-import { create } from '../backend/bot';
+import axios from 'axios';
 
 function Home() {
 
@@ -30,14 +30,28 @@ function Home() {
 
   const onShowResultsDetails = () => {}
 
-  const callBackend = async () => {
+  const callBackend = () => {
     setSpinner(true);
     const inputQuestion = document.getElementById('inputQuestion');
-    await create(inputQuestion).then(completeString => {
-      setQuestions(completeString);
-      setSpinner(false);
-    });
+    axios.get('http://localhost:4000/test', {
+      params: {
+        content: inputQuestion.value
+      }
+    })
+    .then(function (response) {
+      console.log(response.data)
+      setQuestions(response.data);
+      setSpinner(false)
+      return;
+    })
+    .catch(function (e) {
+      console.log(e)
+    })
+
+    setSpinner(true);
+    
   }
+
 
   return (
     <>
