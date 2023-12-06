@@ -31,6 +31,7 @@ function Home() {
   const onShowResultsDetails = () => {}
 
   const callBackend = () => {
+    setQuestions('');
     setSpinner(true);
     const inputQuestion = document.getElementById('inputQuestion');
     axios.get('https://studier-server.onrender.com/question', {
@@ -156,8 +157,8 @@ function Home() {
         </Modal.Footer>
       </Modal>
       <Modal show={spinner}>
-        <Modal.Header closeButton>
-          <Modal.Title>Gerando prova, aguarde</Modal.Title>
+        <Modal.Header>
+          <Modal.Title>Gerando prova, aguarde...</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         {
@@ -166,7 +167,7 @@ function Home() {
           <Spinner animation="border" role="status" variant='light'>
             <span className="visually-hidden">Loading...</span>
           </Spinner>
-          <div className='spinnerLabel'>Gerando prova, aguarde...</div>
+          <div className='spinnerLabel'>Pode levar cerca de 30 segundos à 1 minuto</div>
         </div> : <></>
       }
         </Modal.Body>
