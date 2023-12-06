@@ -184,20 +184,11 @@ function Home() {
         <Modal.Body>
           <div className='modalFinalGrade'>{`Sua nota é: ${finalGrade}`}</div>
           {
-            questions ? questions.map((question) => {
+            history ? history.map((eachHystory) => {
               return <div>
-                <div className='modalQuestion'>{question.question}</div>
-                <div className='modalUserAnswer'>Sua resposta: {questions ? questions.map((question2, index) => {
-                                      const question1 = document.getElementsByName(`group${index}`);
-                                      for (let i=0; i<question1.length; i++) {
-                                        if (question1[i].checked) {
-                                          return question === question2 ? question2.answers[question1[i].id[0]] : ""
-                                        }
-                                      }
-                                    }) : ""
-                                    }
-                </div>
-                <div className='modalRightAnswer'>Resposta correta: {question.rightAnswer}{`)`} {question.answers[question.rightAnswer]}</div>
+                <div className='modalQuestion'>{eachHystory.question}</div>
+                <div className='modalUserAnswer'>Sua resposta: {eachHystory.userAnswer}</div>
+                <div className='modalRightAnswer'>Resposta correta: {eachHystory.rightAnswer}</div>
               </div>
             }) : <></>
           }
