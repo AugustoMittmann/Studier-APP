@@ -34,8 +34,8 @@ function Home() {
     setQuestions('');
     setSpinner(true);
     const inputQuestion = document.getElementById('inputQuestion');
-    axios.get('https://studier-server.onrender.com/question', {
-    //axios.get('http://localhost:4000/question', {
+    //axios.get('https://studier-server.onrender.com/question', {
+    axios.get('http://localhost:4000/question', {
       params: {
         content: inputQuestion.value
       }
@@ -133,7 +133,7 @@ function Home() {
         }
         {
           questions ? <Container className='sendResult'>
-          <Button variant="light" onClick={() => onSubmit()}>Entregar prova e calcular resultado</Button>{' '}
+          <Button variant="light" className={"submitButton"} onClick={() => onSubmit()}>Entregar prova e calcular resultado</Button>{' '}
           </Container> : <></>
         }
       </Container>

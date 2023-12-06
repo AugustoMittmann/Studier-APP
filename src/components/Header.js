@@ -16,8 +16,8 @@ function Header() {
       return;
     }
 
-      axios.get('https://studier-server.onrender.com/create', {
-      //axios.get('http://localhost:4000/create', {
+      //axios.get('https://studier-server.onrender.com/create', {
+      axios.get('http://localhost:4000/create', {
         params: {
           name: name.value,
           password: password.value

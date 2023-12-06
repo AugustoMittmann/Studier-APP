@@ -52,8 +52,9 @@ body {
 }
 
 .completeQuestion {
-  margin-top: 20px;
+  margin: 20px 0px;
   width: 100%;
+  bottom: 10%;
 }
 
 .question {
@@ -69,8 +70,18 @@ body {
   border-radius: 10px;
 }
 
-.sendResult {
-  margin: 20px;
-  text-align: center;
-  bot: 10px
+
+.submitButton {
+  position: fixed;
+  bottom: 1%;
+  right: 1%;
+  border: 1px solid black;
+  background-color: #3CB371;
+}
+.submitButton:hover{
+  background-color: green;
+}
+
+#root {
+  padding-bottom: 1%
 }
