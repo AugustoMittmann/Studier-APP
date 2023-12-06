@@ -7,11 +7,12 @@ import axios from 'axios';
 function Header() {
   const[loginModal, setLoginModal] = useState(false);
   const[logado, setLogado] = useState(false);
+  const[idUser, setIdUser] = useState("");
 
   const onClickCreate = () => {
     const name = document.getElementById('formBasicUser');
     const password = document.getElementById('formBasicPassword');
-    if(name === '' || password === '') {
+    if(name.value === '' || password.value === '') {
       alert("Preencha todos os campos");
       return;
     }
@@ -24,10 +25,12 @@ function Header() {
         }
       })
       .then(function (response) {
+        console.log(response)
         if(response.data === false) {
           alert("Usuário já existe")
         } else {
           alert("Usuário criado");
+          setIdUser(response.data.id);
           setLoginModal(false);
           setLogado(true);
         }
@@ -50,9 +53,10 @@ function Header() {
       })
       .then(function (response) {
         if(response.data === '') {
-          alert("Falha no login") 
+          alert("Falha no login");
         } else {
-          alert("Login realizado")
+          alert("Login realizado");
+          setIdUser(response.data.id);
           setLoginModal(false)
           setLogado(true);
         }

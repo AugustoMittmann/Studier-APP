@@ -85,3 +85,10 @@ body {
 #root {
   padding-bottom: 1%
 }
+
+.labelAnswer {
+  width: 100%;
+}
+.labelAnswer:hover{
+  background-color: #000;
+}

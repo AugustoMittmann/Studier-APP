@@ -13,6 +13,10 @@ function Home() {
   const [finalGrade, setFinalGrade] = useState(0);
   const [spinner, setSpinner] = useState(false);
 
+  const onClickNewTest = () => {
+    setShowResult(false);
+    setQuestions('');
+  }
   const handleClose = () => setShowResult(false);
 
   const onSubmit = () => {
@@ -21,14 +25,14 @@ function Home() {
     let rightAnswers = 0;
     questions.forEach((question, index) => {
       const question1 = document.getElementsByName(`group${index}`);
-      for (let i=0; i<question1.length; i++) if (question1[i].checked) if(question1[i].id === question.rightAnswer) {
+      for (let i=0; i<question1.length; i++) if (question1[i].checked) if(question1[i].id[0] === question.rightAnswer) {
         rightAnswers++;
       }
     })
     setFinalGrade(rightAnswers)
   }
 
-  const onShowResultsDetails = () => {}
+  const onClickShowHistory = () => {}
 
   const callBackend = () => {
     setQuestions('');
@@ -80,51 +84,61 @@ function Home() {
               <Container className='questionOptions'>
                 <ListGroup>
                   <Form>
-                    <ListGroup.Item className='options'>
-                      <Form.Check
-                        type={'radio'}
-                        id={`A`}
-                        name={`group${index}`}
-                        label={`A) ${question.answers.A}`}
-                        title={`${index+1}A`}
-                      />
-                    </ListGroup.Item>
-                    <ListGroup.Item className='options'>
-                      <Form.Check
-                        type={'radio'}
-                        id={`B`}
-                        name={`group${index}`}
-                        label={`B) ${question.answers.B}`}
-                        title={`${index+1}B`}
-                      />
-                    </ListGroup.Item>
-                    <ListGroup.Item className='options'>
-                      <Form.Check
-                        type={'radio'}
-                        id={`C`}
-                        name={`group${index}`}
-                        label={`C) ${question.answers.C}`}
-                        title={`${index+1}C`}
-                      />
-                    </ListGroup.Item>
-                    <ListGroup.Item className='options'>
-                      <Form.Check
-                        type={'radio'}
-                        id={`D`}
-                        name={`group${index}`}
-                        label={`D) ${question.answers.D}`}
-                        title={`${index+1}D`}
-                      />
-                    </ListGroup.Item>
-                    <ListGroup.Item className={`options `}>
-                      <Form.Check
-                        type={'radio'}
-                        id={`E`}
-                        name={`group${index}`}
-                        label={`E) ${question.answers.E}`}
-                        title={`${index+1}E`}
-                      />
-                    </ListGroup.Item>
+                    <label for={`A${index}`} className='labelAnswer'>
+                      <ListGroup.Item className='options'>
+                        <Form.Check
+                          type={'radio'}
+                          id={`A${index}`}
+                          name={`group${index}`}
+                          label={`A) ${question.answers.A}`}
+                          title={`${index+1}A`}
+                          />
+                      </ListGroup.Item>
+                    </label>
+                    <label for={`B${index}`} className='labelAnswer'>
+                      <ListGroup.Item className='options'>
+                        <Form.Check
+                          type={'radio'}
+                          id={`B${index}`}
+                          name={`group${index}`}
+                          label={`B) ${question.answers.B}`}
+                          title={`${index+1}B`}
+                        />
+                      </ListGroup.Item>
+                    </label>
+                    <label for={`C${index}`} className='labelAnswer'>
+                      <ListGroup.Item className='options'>
+                        <Form.Check
+                          type={'radio'}
+                          id={`C${index}`}
+                          name={`group${index}`}
+                          label={`C) ${question.answers.C}`}
+                          title={`${index+1}C`}
+                          />
+                      </ListGroup.Item>
+                    </label>
+                    <label for={`D${index}`} className='labelAnswer'>
+                      <ListGroup.Item className='options'>
+                        <Form.Check
+                          type={'radio'}
+                          id={`D${index}`}
+                          name={`group${index}`}
+                          label={`D) ${question.answers.D}`}
+                          title={`${index+1}D`}
+                          />
+                      </ListGroup.Item>
+                    </label>
+                    <label for={`E${index}`} className='labelAnswer'>
+                      <ListGroup.Item className={`options `}>
+                        <Form.Check
+                          type={'radio'}
+                          id={`E${index}`}
+                          name={`group${index}`}
+                          label={`E) ${question.answers.E}`}
+                          title={`${index+1}E`}
+                          />
+                      </ListGroup.Item>
+                    </label>
                   </Form>
                 </ListGroup>
               </Container>
@@ -148,11 +162,11 @@ function Home() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={onClickNewTest}>
             Realizar novo teste
           </Button>
-          <Button variant="primary" onClick={onShowResultsDetails}>
-            Ver detalhes
+          <Button variant="primary" onClick={onClickShowHistory}>
+            Ver histórico
           </Button>
         </Modal.Footer>
       </Modal>
