@@ -92,3 +92,18 @@ body {
 .labelAnswer:hover{
   background-color: #000;
 }
+
+.modalFinalGrade {
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.modalQuestion{
+
+}
+.modalUserAnswer{
+
+}
+.modalRightAnswer{
+  margin-bottom: 20px;
+}

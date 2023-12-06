@@ -12,6 +12,7 @@ function Home() {
   const [questions, setQuestions] = useState('');
   const [finalGrade, setFinalGrade] = useState(0);
   const [spinner, setSpinner] = useState(false);
+  const [history, setHistory] = useState();
 
   const onClickNewTest = () => {
     setShowResult(false);
@@ -19,18 +20,44 @@ function Home() {
   }
   const handleClose = () => setShowResult(false);
 
+  const discoverLetter = (question, letter) => {
+    let rightLetter;
+    if(question.answers.A === letter) rightLetter = "A";
+    if(question.answers.B === letter) rightLetter = "B";
+    if(question.answers.C === letter) rightLetter = "C";
+    if(question.answers.D === letter) rightLetter = "D";
+    if(question.answers.E === letter) rightLetter = "E";
+    return rightLetter;
+  } 
   const onSubmit = () => {
     setShowResult(true);
     setFinalGrade(0);
+    let currentHistory = []
     let rightAnswers = 0;
     questions.forEach((question, index) => {
       const question1 = document.getElementsByName(`group${index}`);
-      for (let i=0; i<question1.length; i++) if (question1[i].checked) if(question1[i].id[0] === question.rightAnswer) {
-        rightAnswers++;
-      }
+      let userAnswer
+      for (let i=0; i<question1.length; i++) if (question1[i].checked) {
+        if(question1[i].id[0] === question.rightAnswer) {
+          rightAnswers++;
+        }
+        if(question.answers.A === question.answers[question1[i].id[0]]) userAnswer = discoverLetter(question, question.answers.A) + `)` + question.answers.A
+        if(question.answers.B === question.answers[question1[i].id[0]]) userAnswer = discoverLetter(question, question.answers.B) + `)` + question.answers.B
+        if(question.answers.C === question.answers[question1[i].id[0]]) userAnswer = discoverLetter(question, question.answers.C) + `)` + question.answers.C
+        if(question.answers.D === question.answers[question1[i].id[0]]) userAnswer = discoverLetter(question, question.answers.D) + `)` + question.answers.D
+        if(question.answers.E === question.answers[question1[i].id[0]]) userAnswer = discoverLetter(question, question.answers.E) + `)` + question.answers.E
+    }
+    
+    currentHistory.push({
+      question: question.question,
+      rightAnswer: questions[index].rightAnswer + `)` + question.answers[question.rightAnswer],
+      userAnswer: userAnswer
+      })
     })
-    setFinalGrade(rightAnswers)
+    setFinalGrade(rightAnswers);
+    setHistory(currentHistory);
   }
+  console.log(history)
 
   const onClickShowHistory = () => {}
 
@@ -55,7 +82,6 @@ function Home() {
     })
     setSpinner(true);
   }
-
 
   return (
     <>
@@ -151,12 +177,30 @@ function Home() {
           </Container> : <></>
         }
       </Container>
-      <Modal show={showResults} onHide={handleClose}>
+      <Modal show={showResults} onHide={handleClose} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Resultados</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {`Sua nota é: ${finalGrade}`}
+          <div className='modalFinalGrade'>{`Sua nota é: ${finalGrade}`}</div>
+          {
+            questions ? questions.map((question) => {
+              return <div>
+                <div className='modalQuestion'>{question.question}</div>
+                <div className='modalUserAnswer'>Sua resposta: {questions ? questions.map((question2, index) => {
+                                      const question1 = document.getElementsByName(`group${index}`);
+                                      for (let i=0; i<question1.length; i++) {
+                                        if (question1[i].checked) {
+                                          return question === question2 ? question2.answers[question1[i].id[0]] : ""
+                                        }
+                                      }
+                                    }) : ""
+                                    }
+                </div>
+                <div className='modalRightAnswer'>Resposta correta: {question.rightAnswer}{`)`} {question.answers[question.rightAnswer]}</div>
+              </div>
+            }) : <></>
+          }
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
