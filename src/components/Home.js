@@ -79,8 +79,8 @@ function Home() {
     setSpinner(true);
     const inputQuestion = document.getElementById('inputQuestion');
     setContent(inputQuestion.value);
-    //axios.get('https://studier-server.onrender.com/question', {
-    axios.get('http://localhost:4000/question', {
+    axios.get('https://studier-server.onrender.com/question', {
+    //axios.get('http://localhost:4000/question', {
       params: {
         content: inputQuestion.value
       }
