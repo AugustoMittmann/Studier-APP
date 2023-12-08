@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css.css';
-import { Container, Badge, Button, Form, ListGroup, Spinner } from 'react-bootstrap'
+import { Container, Badge, Button, Form, ListGroup, Spinner, Alert } from 'react-bootstrap'
 import { useState } from 'react';
 import Header from './Header'
 import Modal from 'react-bootstrap/Modal';
@@ -13,10 +13,15 @@ function Home() {
   const [finalGrade, setFinalGrade] = useState(0);
   const [spinner, setSpinner] = useState(false);
   const [history, setHistory] = useState();
+  const [userId, setUserId] = useState("");
+  const [content, setContent] = useState('');
+  const [logado, setLogado] = useState(false);
 
   const onClickNewTest = () => {
     setShowResult(false);
     setQuestions('');
+    const inputQuestion = document.getElementById('inputQuestion');
+    inputQuestion.value = "";
   }
   const handleClose = () => setShowResult(false);
 
@@ -57,14 +62,23 @@ function Home() {
     setFinalGrade(rightAnswers);
     setHistory(currentHistory);
   }
-  console.log(history)
-
-  const onClickShowHistory = () => {}
-
+  const onClickSaveHistory = () => {
+    alert("Prova salva!");
+    axios.get('https://studier-server.onrender.com/saveHistory', {
+    //axios.get('http://localhost:4000/saveHistory', {
+      params:{
+        userId: userId,
+        history: history,
+        finalGrade: finalGrade,
+        content: content,
+      }
+    })
+  }
   const callBackend = () => {
     setQuestions('');
     setSpinner(true);
     const inputQuestion = document.getElementById('inputQuestion');
+    setContent(inputQuestion.value);
     //axios.get('https://studier-server.onrender.com/question', {
     axios.get('http://localhost:4000/question', {
       params: {
@@ -72,20 +86,24 @@ function Home() {
       }
     })
     .then(function (response) {
-      console.log(response.data)
       setQuestions(response.data);
       setSpinner(false)
       return;
     })
     .catch(function (e) {
-      console.log(e)
+      alert("Houve uma falha, tente novamente")
+      console.error(e)
+      setSpinner(false)
     })
-    setSpinner(true);
   }
 
   return (
     <>
-      <Header />
+      <Header 
+        setUserId={setUserId} 
+        userId={userId} 
+        logado={logado} 
+        setLogado={setLogado}/>
       <Container className='containerQuestion'>
         <div className='subTitle'>
           <h3>Entre um tema que deseja estudar!</h3>
@@ -200,9 +218,16 @@ function Home() {
           <Button variant="primary" onClick={onClickNewTest}>
             Realizar novo teste
           </Button>
-          <Button variant="primary" onClick={onClickShowHistory}>
-            Ver histórico
+          <Button variant="primary" onClick={onClickSaveHistory} disabled={!logado}>
+            Salvar no histórico
           </Button>
+          { logado ? <></> :
+            <Alert variant="warning" className='warningLogin'>
+            <p>
+              Faça login para salvar essa prova no seu histórico.
+            </p>
+          </Alert>
+          }
         </Modal.Footer>
       </Modal>
       <Modal show={spinner}>
@@ -222,7 +247,7 @@ function Home() {
         </Modal.Body>
       </Modal>
     </>
-  );
+    );
 }
 
 export default Home;

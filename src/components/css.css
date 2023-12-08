@@ -35,6 +35,7 @@ body {
 
 .subTitle {
   margin-bottom: 20px;
+  color: white;
 }
 
 .inputText {
@@ -44,11 +45,13 @@ body {
 .spinner {
   text-align: center;
   margin-top: 30px;
+  color: black;
 }
 
 .spinnerLabel{
   font-size: 20px;
   font-weight: bold;
+  color: black;
 }
 
 .completeQuestion {
@@ -106,4 +109,37 @@ body {
 }
 .modalRightAnswer{
   margin-bottom: 20px;
+}
+
+.historyContainer {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid black;
+  margin-bottom: 5px;
+  padding: 0px 10px; 
+}
+
+.historyContainer:hover {
+  background-color: #DDD;
+  cursor: pointer;
+}
+.historyDelete:hover {
+  background-color: red;
+  cursor: pointer;
+}
+.historyDelete {
+  display: flex;
+  justify-content: center;
+  background-color: red;
+  border: 1px solid black;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  padding: 0px 10px;
+}
+.allContainerHistory {
+  display: grid;
+  grid-template-columns: 9fr 1fr;
+}
+.warningLogin {
+  width: 100%;
 }
