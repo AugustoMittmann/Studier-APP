@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Modal, Form } from 'react-bootstrap'
 import './css.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 
 function Header(props) {
@@ -201,7 +201,6 @@ function Header(props) {
                 {
                   historyToShow.data.map((option, index) => {
                     if(option.getQuestion.historyId === historyDetailsId) {
-                      console.log(option)
                     return <div className='historyDetailsContainer'>
                       <div className='historyQuestion1'>
                         <div>{option.getQuestion.question1}</div>
@@ -256,6 +255,7 @@ function Header(props) {
                       <div>Nota final: {historyToShow.data[index].finalGrade}</div>
                   </div>
                     }
+                    return '';
                   })
                 }
               </div> 
