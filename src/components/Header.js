@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Modal, Form } from 'react-bootstrap'
+import { Button, Modal, Form, ListGroup } from 'react-bootstrap'
 import './css.css';
 import { useState } from 'react';
 import axios from 'axios';
@@ -158,27 +158,29 @@ function Header(props) {
           <div>
           <div className='questionHistory'>
             {
-              historyToShow === '' ? <span>Nenhuma prova encontrada. Faça mais provas e salve no histórico para aparecer aqui.</span> :
+              historyToShow === '' ? <span></span> :
               <div>
                 {
                   historyToShow.data.map((option, index) => {
                     return <div className='allContainerHistory'>
-                    <div className='historyContainer' onClick={() => {
+                  <ListGroup onClick={() => {
                       setHistoryDetailsModal(true)
                       setHistoryDetailsId(historyToShow.data[index].getQuestion.historyId)
                       }}>
-                        <span className='historyContent'>
-                          Conteúdo da prova: {historyToShow.data[index].content}
-                        </span>
-                        <span className='historyGrade'>
-                          Nota final: {historyToShow.data[index].finalGrade}
-                        </span>
-                  </div>
-                  <div className='historyDelete'>
-                    <span onClick={() => onClickDeleteHistory(historyToShow.data[index].getQuestion.historyId)}>
-                      Deletar
-                    </span>
-                  </div>
+                    <ListGroup.Item className='historyContainer'>
+                      <span className='historyContent'>
+                        Conteúdo da prova: {historyToShow.data[index].content}
+                      </span>
+                      <span className='historyGrade'>
+                        Nota final: {historyToShow.data[index].finalGrade}
+                      </span>
+                    </ListGroup.Item>
+                  </ListGroup>
+                  <Button 
+                    variant="danger" 
+                    onClick={() => 
+                    onClickDeleteHistory(historyToShow.data[index].getQuestion.historyId)} 
+                    className='historyDelete'>Deletar</Button>{' '}
                   </div>
                   })
                 }
@@ -202,57 +204,59 @@ function Header(props) {
                   historyToShow.data.map((option, index) => {
                     if(option.getQuestion.historyId === historyDetailsId) {
                     return <div className='historyDetailsContainer'>
-                      <div className='historyQuestion1'>
-                        <div>{option.getQuestion.question1}</div>
-                        <div>Resposta certa: {option.getRightAnswer.answer1}</div>
-                        <div>Sua resposta: {option.getUserAnswer.answer1}</div>
-                      </div>
-                      <div className='historyQuestion2'>
-                        <div>{option.getQuestion.question2}</div>
-                        <div>Resposta certa: {option.getRightAnswer.answer2}</div>
-                        <div>Sua resposta: {option.getUserAnswer.answer2}</div>
-                      </div>
-                      <div className='historyQuestion3'>
-                        <div>{option.getQuestion.question3}</div>
-                        <div>Resposta certa: {option.getRightAnswer.answer3}</div>
-                        <div>Sua resposta: {option.getUserAnswer.answer3}</div>
-                      </div>
-                      <div className='historyQuestion4'>
-                        <div>{option.getQuestion.question4}</div>
-                        <div>Resposta certa: {option.getRightAnswer.answer4}</div>
-                        <div>Sua resposta: {option.getUserAnswer.answer4}</div>
-                      </div>
-                      <div className='historyQuestion5'>
-                        <div>{option.getQuestion.question5}</div>
-                        <div>Resposta certa: {option.getRightAnswer.answer5}</div>
-                        <div>Sua resposta: {option.getUserAnswer.answer5}</div>
-                      </div>
-                      <div className='historyQuestion6'>
-                        <div>{option.getQuestion.question6}</div>
-                        <div>Resposta certa: {option.getRightAnswer.answer6}</div>
-                        <div>Sua resposta: {option.getUserAnswer.answer6}</div>
-                      </div>
-                      <div className='historyQuestion7'>
-                        <div>{option.getQuestion.question7}</div>
-                        <div>Resposta certa: {option.getRightAnswer.answer7}</div>
-                        <div>Sua resposta: {option.getUserAnswer.answer7}</div>
-                      </div>
-                      <div className='historyQuestion8'>
-                        <div>{option.getQuestion.question8}</div>
-                        <div>Resposta certa: {option.getRightAnswer.answer8}</div>
-                        <div>Sua resposta: {option.getUserAnswer.answer8}</div>
-                      </div>
-                      <div className='historyQuestion9'>
-                        <div>{option.getQuestion.question9}</div>
-                        <div>Resposta certa: {option.getRightAnswer.answer9}</div>
-                        <div>Sua resposta: {option.getUserAnswer.answer9}</div>
-                      </div>
-                      <div className='historyQuestion10'>
-                        <div>{option.getQuestion.question10}</div>
-                        <div>Resposta certa: {option.getRightAnswer.answer10}</div>
-                        <div>Sua resposta: {option.getUserAnswer.answer10}</div>
-                      </div>
-                      <div>Nota final: {historyToShow.data[index].finalGrade}</div>
+                      <ListGroup className="datailedItems">
+                        <ListGroup.Item>{option.getQuestion.question1}</ListGroup.Item>
+                        <ListGroup.Item>Resposta certa: {option.getRightAnswer.answer1}</ListGroup.Item>
+                        <ListGroup.Item>Sua resposta: {option.getUserAnswer.answer1}</ListGroup.Item>
+                      </ListGroup>
+                      <ListGroup className="datailedItems">
+                        <ListGroup.Item>{option.getQuestion.question2}</ListGroup.Item>
+                        <ListGroup.Item>Resposta certa: {option.getRightAnswer.answer2}</ListGroup.Item>
+                        <ListGroup.Item>Sua resposta: {option.getUserAnswer.answer2}</ListGroup.Item>
+                      </ListGroup>
+                      <ListGroup className="datailedItems">
+                        <ListGroup.Item>{option.getQuestion.question3}</ListGroup.Item>
+                        <ListGroup.Item>Resposta certa: {option.getRightAnswer.answer3}</ListGroup.Item>
+                        <ListGroup.Item>Sua resposta: {option.getUserAnswer.answer3}</ListGroup.Item>
+                      </ListGroup>
+                      <ListGroup className="datailedItems">
+                        <ListGroup.Item>{option.getQuestion.question4}</ListGroup.Item>
+                        <ListGroup.Item>Resposta certa: {option.getRightAnswer.answer4}</ListGroup.Item>
+                        <ListGroup.Item>Sua resposta: {option.getUserAnswer.answer4}</ListGroup.Item>
+                      </ListGroup>
+                      <ListGroup className="datailedItems">
+                        <ListGroup.Item>{option.getQuestion.question5}</ListGroup.Item>
+                        <ListGroup.Item>Resposta certa: {option.getRightAnswer.answer5}</ListGroup.Item>
+                        <ListGroup.Item>Sua resposta: {option.getUserAnswer.answer5}</ListGroup.Item>
+                      </ListGroup>
+                      <ListGroup className="datailedItems">
+                        <ListGroup.Item>{option.getQuestion.question6}</ListGroup.Item>
+                        <ListGroup.Item>Resposta certa: {option.getRightAnswer.answer6}</ListGroup.Item>
+                        <ListGroup.Item>Sua resposta: {option.getUserAnswer.answer6}</ListGroup.Item>
+                      </ListGroup>
+                      <ListGroup className="datailedItems">
+                        <ListGroup.Item>{option.getQuestion.question7}</ListGroup.Item>
+                        <ListGroup.Item>Resposta certa: {option.getRightAnswer.answer7}</ListGroup.Item>
+                        <ListGroup.Item>Sua resposta: {option.getUserAnswer.answer7}</ListGroup.Item>
+                      </ListGroup>
+                      <ListGroup className="datailedItems">
+                        <ListGroup.Item>{option.getQuestion.question8}</ListGroup.Item>
+                        <ListGroup.Item>Resposta certa: {option.getRightAnswer.answer8}</ListGroup.Item>
+                        <ListGroup.Item>Sua resposta: {option.getUserAnswer.answer8}</ListGroup.Item>
+                      </ListGroup>
+                      <ListGroup className="datailedItems">
+                        <ListGroup.Item>{option.getQuestion.question9}</ListGroup.Item>
+                        <ListGroup.Item>Resposta certa: {option.getRightAnswer.answer9}</ListGroup.Item>
+                        <ListGroup.Item>Sua resposta: {option.getUserAnswer.answer9}</ListGroup.Item>
+                      </ListGroup>
+                      <ListGroup className="datailedItems">
+                        <ListGroup.Item>{option.getQuestion.question10}</ListGroup.Item>
+                        <ListGroup.Item>Resposta certa: {option.getRightAnswer.answer10}</ListGroup.Item>
+                        <ListGroup.Item>Sua resposta: {option.getUserAnswer.answer10}</ListGroup.Item>
+                      </ListGroup>
+                      <ListGroup className="datailedItems">
+                        <ListGroup.Item>Nota final: {historyToShow.data[index].finalGrade}</ListGroup.Item>
+                      </ListGroup>
                   </div>
                     }
                     return '';

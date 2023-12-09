@@ -238,7 +238,7 @@ function Home() {
         {
         spinner ? 
         <div className='spinner'>
-          <Spinner animation="border" role="status" variant='light'>
+          <Spinner animation="border" role="status" variant='dark'>
             <span className="visually-hidden">Loading...</span>
           </Spinner>
           <div className='spinnerLabel'>Pode levar cerca de 30 segundos à 1 minuto</div>
