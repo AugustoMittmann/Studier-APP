@@ -1,10 +1,16 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css.css';
-import { Container, Badge, Button, Form, ListGroup, Spinner, Alert } from 'react-bootstrap'
 import { useState, useEffect } from 'react';
-import Header from './Header'
-import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
+import LoginModal from '../modals/LoginModal';
+import HistoryModal from '../modals/HistoryModal';
+import HistoryDetailsModal from '../modals/HistoryDetailsModal';
+import ShowResultsModal from '../modals/ShowResultsModal';
+import GeneratingTestModal from '../modals/GeneratingTestModal';
+import FullScreenModal from '../modals/FullScreenModal';
+import Header from './Header';
+import StartContainer from './StartContainer';
+import QuestionsContainer from './QuestionsContainer';
 
 function Home() {
 
@@ -17,6 +23,11 @@ function Home() {
   const [content, setContent] = useState('');
   const [logado, setLogado] = useState(false);
   const [connectServer, setConnectServer] = useState(false);
+  const [loginModal, setLoginModal] = useState(false);
+  const [historyDetailsModal, setHistoryDetailsModal] = useState(false);
+  const [historyDetailsId, setHistoryDetailsId] = useState('');
+  const [historyToShow, setHistoryToShow] = useState('');
+  const [historyModal, setHistoryModal] = useState(false);
 
   const onClickNewTest = () => {
     setShowResult(false);
@@ -69,8 +80,8 @@ function Home() {
   }
   const onClickSaveHistory = () => {
     alert("Prova salva!");
-    axios.get('https://studier-server.onrender.com/saveHistory', {
-    //axios.get('http://localhost:4000/saveHistory', {
+    //axios.get('https://studier-server.onrender.com/saveHistory', {
+    axios.get('http://localhost:4000/saveHistory', {
       params:{
         userId: userId,
         history: history,
@@ -84,8 +95,8 @@ function Home() {
     setSpinner(true);
     const inputQuestion = document.getElementById('inputQuestion');
     setContent(inputQuestion.value);
-    axios.get('https://studier-server.onrender.com/question', {
-    //axios.get('http://localhost:4000/question', {
+    //axios.get('https://studier-server.onrender.com/question', {
+    axios.get('http://localhost:4000/question', {
       params: {
         content: inputQuestion.value
       }
@@ -101,9 +112,47 @@ function Home() {
       setSpinner(false)
     })
   }
+  const onClickSair = () => {
+    setLogado(false);
+    alert("Você foi desconectado");
+    setUserId("");
+  };
+  const onShowHistory = () => {
+    //axios.get('https://studier-server.onrender.com/showHistory', {
+    axios.get('http://localhost:4000/showHistory', {
+        params: {
+          userId: userId
+        }
+      })
+      .then(function (response) {
+        setHistoryToShow(response)
+      })
+      .catch(function (e) {
+        alert("Houve algo errado, por favor, tente novamente.");
+        console.error(e)
+      })
+    setHistoryModal(true);
+  }
+  const onClickDeleteHistory = (id) => {
+    //axios.get('https://studier-server.onrender.com/deleteHistory', {
+    axios.get('http://localhost:4000/deleteHistory', {
+        params: {
+          id: id
+        }
+      })
+      .then(function () {
+        alert("Histórico apagado!");
+        onShowHistory();
+      })
+      .catch(function (e) {
+        alert("Houve algo errado, por favor, tente novamente.");
+        console.error(e)
+      })
+  }
+  
   useEffect(() => {
-    axios.get('https://studier-server.onrender.com/connectServer', {})
-		//axios.get('http://localhost:4000/connectServer', {})
+    //axios.get('https://studier-server.onrender.com/connectServer', {})
+		axios.get('http://localhost:4000/connectServer', {})
     .then(function () {
       setConnectServer(true);
       return;
@@ -115,169 +164,50 @@ function Home() {
 	}, [])
   return (
     <>
-    {connectServer ? <><Header 
-        setUserId={setUserId} 
-        userId={userId} 
-        logado={logado} 
+    {connectServer ? <>
+      <LoginModal 
+        loginModal={loginModal} 
+        setLoginModal={setLoginModal}
+        setUserId={setUserId}
         setLogado={setLogado}/>
-      <Container className='containerQuestion'>
-        <div className='subTitle'>
-          <h3>Entre um tema que deseja estudar!</h3>
-        </div>
-        <Form.Control 
-          type="textarea" 
-          placeholder="Exemplo: matemática, história do Brasil, física quântica" 
-          id="inputQuestion"
-          className='inputText' />
-        <Button 
-          variant="light" 
-          onClick={callBackend} 
-          disabled={spinner ? true : false} >Fazer prova</Button>{' '}
-      </Container>
-      <Container>
-        {
-          questions ? questions.map((question, index) => {
-            return <Container className='completeQuestion' key={index}>
-              <Container>
-                <Badge className='question' bg="light"><h5>{question.question}</h5></Badge>
-              </Container>
-              <Container className='questionOptions'>
-                <ListGroup>
-                  <Form>
-                    <label for={`A${index}`} className='labelAnswer'>
-                      <ListGroup.Item className='options'>
-                        <Form.Check
-                          type={'radio'}
-                          id={`A${index}`}
-                          name={`group${index}`}
-                          label={`A) ${question.answers.A}`}
-                          title={`${index+1}A`}
-                          />
-                      </ListGroup.Item>
-                    </label>
-                    <label for={`B${index}`} className='labelAnswer'>
-                      <ListGroup.Item className='options'>
-                        <Form.Check
-                          type={'radio'}
-                          id={`B${index}`}
-                          name={`group${index}`}
-                          label={`B) ${question.answers.B}`}
-                          title={`${index+1}B`}
-                        />
-                      </ListGroup.Item>
-                    </label>
-                    <label for={`C${index}`} className='labelAnswer'>
-                      <ListGroup.Item className='options'>
-                        <Form.Check
-                          type={'radio'}
-                          id={`C${index}`}
-                          name={`group${index}`}
-                          label={`C) ${question.answers.C}`}
-                          title={`${index+1}C`}
-                          />
-                      </ListGroup.Item>
-                    </label>
-                    <label for={`D${index}`} className='labelAnswer'>
-                      <ListGroup.Item className='options'>
-                        <Form.Check
-                          type={'radio'}
-                          id={`D${index}`}
-                          name={`group${index}`}
-                          label={`D) ${question.answers.D}`}
-                          title={`${index+1}D`}
-                          />
-                      </ListGroup.Item>
-                    </label>
-                    <label for={`E${index}`} className='labelAnswer'>
-                      <ListGroup.Item className={`options `}>
-                        <Form.Check
-                          type={'radio'}
-                          id={`E${index}`}
-                          name={`group${index}`}
-                          label={`E) ${question.answers.E}`}
-                          title={`${index+1}E`}
-                          />
-                      </ListGroup.Item>
-                    </label>
-                  </Form>
-                </ListGroup>
-              </Container>
-            </Container>
-          }) : <></>
-        }
-        {
-          questions ? <Container className='sendResult'>
-          <Button variant="light" className={"submitButton"} onClick={() => onSubmit()}>Entregar prova e calcular resultado</Button>{' '}
-          </Container> : <></>
-        }
-      </Container>
-      <Modal show={showResults} onHide={handleClose} size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title>Resultados</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className='modalFinalGrade'>{`Sua nota é: ${finalGrade}`}</div>
-          {
-            history ? history.map((eachHystory) => {
-              return <div className='allResultQuestions'>
-                <div className={`modalQuestion ` + (eachHystory.userAnswer === eachHystory.rightAnswer ? "goodGrade" : "badGrade")}>
-                  {eachHystory.question}
-                  {console.log()}
-                  </div>
-                <div className={`modalUserAnswer ` + (eachHystory.userAnswer === eachHystory.rightAnswer ? "goodGrade" : "badGrade")}>
-                  Sua resposta: {eachHystory.userAnswer}
-                  </div>
-                <div className={`modalRightAnswer ` + (eachHystory.userAnswer === eachHystory.rightAnswer ? "goodGrade" : "badGrade")}>
-                  Resposta correta: {eachHystory.rightAnswer}
-                  </div>
-              </div>
-            }) : <></>
-          }
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={onClickNewTest}>
-            Realizar novo teste
-          </Button>
-          <Button variant="primary" onClick={onClickSaveHistory} disabled={!logado}>
-            Salvar no histórico
-          </Button>
-          { logado ? <></> :
-            <Alert variant="warning" className='warningLogin'>
-            <p>
-              Faça login para salvar essa prova no seu histórico.
-            </p>
-          </Alert>
-          }
-        </Modal.Footer>
-      </Modal>
-      <Modal show={spinner}>
-        <Modal.Header>
-          <Modal.Title>Gerando prova, aguarde...</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        {
-        spinner ? 
-        <div className='spinner'>
-          <Spinner animation="border" role="status" variant='dark'>
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-          <div className='spinnerLabel'>Pode levar cerca de 30 segundos</div>
-        </div> : <></>
-      }
-        </Modal.Body>
-      </Modal></> 
-      : <Modal fullscreen={true} show={!connectServer}>
-      <Modal.Body>
-      {
-      <div className='spinner'>
-        <Spinner animation="border" role="status" variant='dark'>
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-        <div className='spinnerLabel'>Conectando ao servidor</div>
-      </div>
-    }
-      </Modal.Body>
-    </Modal>
+      <HistoryModal 
+        historyModal={historyModal}
+        setHistoryModal={setHistoryModal}
+        historyToShow={historyToShow}
+        setHistoryDetailsModal={setHistoryDetailsModal}
+        setHistoryDetailsId={setHistoryDetailsId}
+        onClickDeleteHistory={onClickDeleteHistory}/>
+      <HistoryDetailsModal 
+        historyDetailsModal={historyDetailsModal}
+        setHistoryDetailsModal={setHistoryDetailsModal}
+        historyToShow={historyToShow}
+        historyDetailsId={historyDetailsId}/>
+      <ShowResultsModal 
+        showResults={showResults}
+        handleClose={handleClose}
+        finalGrade={finalGrade}
+        history={history}
+        onClickNewTest={onClickNewTest}
+        onClickSaveHistory={onClickSaveHistory}
+        logado={logado}/>
+      <GeneratingTestModal spinner={spinner}/>
+
+      <Header 
+        logado={logado}
+        onShowHistory={onShowHistory}
+        onClickSair={onClickSair}
+        setLoginModal={setLoginModal}/>
+
+      <StartContainer 
+        callBackend={callBackend}
+        spinner={spinner}/>
+      
+      <QuestionsContainer 
+        questions={questions}
+        onSubmit={onSubmit}/>
+      
+      </> 
+      : <FullScreenModal connectServer={connectServer}/>
     }
     </>
     );
