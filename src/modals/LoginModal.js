@@ -8,8 +8,8 @@ function LoginModal(props) {
     const name = document.getElementById('formBasicUser');
     const password = document.getElementById('formBasicPassword');
 
-      //axios.get('https://studier-server.onrender.com/login', {
-      axios.get('http://localhost:4000/login', {
+      axios.get('https://studier-server.onrender.com/login', {
+      //axios.get('http://localhost:4000/login', {
         params: {
           name: name.value,
           password: password.value
@@ -39,8 +39,8 @@ function LoginModal(props) {
       return;
     }
 
-      //axios.get('https://studier-server.onrender.com/create', {
-      axios.get('http://localhost:4000/create', {
+      axios.get('https://studier-server.onrender.com/create', {
+      //axios.get('http://localhost:4000/create', {
         params: {
           name: name.value,
           password: password.value
