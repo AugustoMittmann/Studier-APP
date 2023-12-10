@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css.css';
 import { Container, Badge, Button, Form, ListGroup, Spinner, Alert } from 'react-bootstrap'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from './Header'
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
@@ -16,6 +16,7 @@ function Home() {
   const [userId, setUserId] = useState("");
   const [content, setContent] = useState('');
   const [logado, setLogado] = useState(false);
+  const [connectServer, setConnectServer] = useState(false);
 
   const onClickNewTest = () => {
     setShowResult(false);
@@ -100,10 +101,20 @@ function Home() {
       setSpinner(false)
     })
   }
-
+  useEffect(() => {
+		axios.get('http://localhost:4000/connectServer', {})
+    .then(function () {
+      setConnectServer(true);
+      return;
+    })
+    .catch(function (e) {
+      alert("Houve uma falha, tente recarregar a página")
+      console.error(e)
+    })
+	}, [])
   return (
     <>
-      <Header 
+    {connectServer ? <><Header 
         setUserId={setUserId} 
         userId={userId} 
         logado={logado} 
@@ -256,7 +267,20 @@ function Home() {
         </div> : <></>
       }
         </Modal.Body>
-      </Modal>
+      </Modal></> 
+      : <Modal fullscreen={true} show={!connectServer}>
+      <Modal.Body>
+      {
+      <div className='spinner'>
+        <Spinner animation="border" role="status" variant='dark'>
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+        <div className='spinnerLabel'>Conectando ao servidor</div>
+      </div>
+    }
+      </Modal.Body>
+    </Modal>
+    }
     </>
     );
 }
