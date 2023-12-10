@@ -133,3 +133,12 @@ body {
 .datailedItems {
   margin-bottom: 10px;
 }
+.goodGrade {
+  color: green;
+}
+.badGrade {
+  color: red;
+}
+.allResultQuestions {
+  margin-bottom: 20px;
+}

@@ -19,8 +19,8 @@ function Header(props) {
       return;
     }
 
-      axios.get('https://studier-server.onrender.com/create', {
-      //axios.get('http://localhost:4000/create', {
+      //axios.get('https://studier-server.onrender.com/create', {
+      axios.get('http://localhost:4000/create', {
         params: {
           name: name.value,
           password: password.value
@@ -47,8 +47,8 @@ function Header(props) {
     const name = document.getElementById('formBasicUser');
     const password = document.getElementById('formBasicPassword');
 
-      axios.get('https://studier-server.onrender.com/login', {
-      //axios.get('http://localhost:4000/login', {
+      //axios.get('https://studier-server.onrender.com/login', {
+      axios.get('http://localhost:4000/login', {
         params: {
           name: name.value,
           password: password.value
@@ -76,8 +76,8 @@ function Header(props) {
     props.setUserId("");
   };
   const onShowHistory = () => {
-    axios.get('https://studier-server.onrender.com/showHistory', {
-    //axios.get('http://localhost:4000/showHistory', {
+    //axios.get('https://studier-server.onrender.com/showHistory', {
+    axios.get('http://localhost:4000/showHistory', {
         params: {
           userId: props.userId
         }
@@ -92,8 +92,8 @@ function Header(props) {
     setHistoryModal(true);
   }
   const onClickDeleteHistory = (id) => {
-    axios.get('https://studier-server.onrender.com/deleteHistory', {
-    //axios.get('http://localhost:4000/deleteHistory', {
+    //axios.get('https://studier-server.onrender.com/deleteHistory', {
+    axios.get('http://localhost:4000/deleteHistory', {
         params: {
           id: id
         }
@@ -171,7 +171,7 @@ function Header(props) {
                       <span className='historyContent'>
                         Conteúdo da prova: {historyToShow.data[index].content}
                       </span>
-                      <span className='historyGrade'>
+                      <span className={historyToShow.data[index].finalGrade >= 6 ? "goodGrade" : "badGrade"}>
                         Nota final: {historyToShow.data[index].finalGrade}
                       </span>
                     </ListGroup.Item>
@@ -205,57 +205,119 @@ function Header(props) {
                     if(option.getQuestion.historyId === historyDetailsId) {
                     return <div className='historyDetailsContainer'>
                       <ListGroup className="datailedItems">
-                        <ListGroup.Item>{option.getQuestion.question1}</ListGroup.Item>
-                        <ListGroup.Item>Resposta certa: {option.getRightAnswer.answer1}</ListGroup.Item>
-                        <ListGroup.Item>Sua resposta: {option.getUserAnswer.answer1}</ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer1 === option.getUserAnswer.answer1 ? "success" : "danger"}>
+                          {option.getQuestion.question1}
+                        </ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer1 === option.getUserAnswer.answer1 ? "success" : "danger"}>
+                          Resposta certa: {option.getRightAnswer.answer1}
+                        </ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer1 === option.getUserAnswer.answer1 ? "success" : "danger"}>
+                          Sua resposta: {option.getUserAnswer.answer1}
+                        </ListGroup.Item>
                       </ListGroup>
                       <ListGroup className="datailedItems">
-                        <ListGroup.Item>{option.getQuestion.question2}</ListGroup.Item>
-                        <ListGroup.Item>Resposta certa: {option.getRightAnswer.answer2}</ListGroup.Item>
-                        <ListGroup.Item>Sua resposta: {option.getUserAnswer.answer2}</ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer2 === option.getUserAnswer.answer2 ? "success" : "danger"}>
+                          {option.getQuestion.question2}
+                        </ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer2 === option.getUserAnswer.answer2 ? "success" : "danger"}>
+                          Resposta certa: {option.getRightAnswer.answer2}
+                        </ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer2 === option.getUserAnswer.answer2 ? "success" : "danger"}>
+                          Sua resposta: {option.getUserAnswer.answer2}
+                        </ListGroup.Item>
                       </ListGroup>
                       <ListGroup className="datailedItems">
-                        <ListGroup.Item>{option.getQuestion.question3}</ListGroup.Item>
-                        <ListGroup.Item>Resposta certa: {option.getRightAnswer.answer3}</ListGroup.Item>
-                        <ListGroup.Item>Sua resposta: {option.getUserAnswer.answer3}</ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer3 === option.getUserAnswer.answer3 ? "success" : "danger"}>
+                          {option.getQuestion.question3}
+                        </ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer3 === option.getUserAnswer.answer3 ? "success" : "danger"}>
+                          Resposta certa: {option.getRightAnswer.answer3}
+                        </ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer3 === option.getUserAnswer.answer3 ? "success" : "danger"}>
+                          Sua resposta: {option.getUserAnswer.answer3}
+                        </ListGroup.Item>
                       </ListGroup>
                       <ListGroup className="datailedItems">
-                        <ListGroup.Item>{option.getQuestion.question4}</ListGroup.Item>
-                        <ListGroup.Item>Resposta certa: {option.getRightAnswer.answer4}</ListGroup.Item>
-                        <ListGroup.Item>Sua resposta: {option.getUserAnswer.answer4}</ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer4 === option.getUserAnswer.answer4 ? "success" : "danger"}>
+                          {option.getQuestion.question4}
+                        </ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer4 === option.getUserAnswer.answer4 ? "success" : "danger"}>
+                          Resposta certa: {option.getRightAnswer.answer4}
+                        </ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer4 === option.getUserAnswer.answer4 ? "success" : "danger"}>
+                          Sua resposta: {option.getUserAnswer.answer4}
+                        </ListGroup.Item>
                       </ListGroup>
                       <ListGroup className="datailedItems">
-                        <ListGroup.Item>{option.getQuestion.question5}</ListGroup.Item>
-                        <ListGroup.Item>Resposta certa: {option.getRightAnswer.answer5}</ListGroup.Item>
-                        <ListGroup.Item>Sua resposta: {option.getUserAnswer.answer5}</ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer5 === option.getUserAnswer.answer5 ? "success" : "danger"}>
+                          {option.getQuestion.question5}
+                        </ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer5 === option.getUserAnswer.answer5 ? "success" : "danger"}>
+                          Resposta certa: {option.getRightAnswer.answer5}
+                        </ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer5 === option.getUserAnswer.answer5 ? "success" : "danger"}>
+                          Sua resposta: {option.getUserAnswer.answer5}
+                        </ListGroup.Item>
                       </ListGroup>
                       <ListGroup className="datailedItems">
-                        <ListGroup.Item>{option.getQuestion.question6}</ListGroup.Item>
-                        <ListGroup.Item>Resposta certa: {option.getRightAnswer.answer6}</ListGroup.Item>
-                        <ListGroup.Item>Sua resposta: {option.getUserAnswer.answer6}</ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer6 === option.getUserAnswer.answer6 ? "success" : "danger"}>
+                          {option.getQuestion.question6}
+                        </ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer6 === option.getUserAnswer.answer6 ? "success" : "danger"}>
+                          Resposta certa: {option.getRightAnswer.answer6}
+                        </ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer6 === option.getUserAnswer.answer6 ? "success" : "danger"}>
+                          Sua resposta: {option.getUserAnswer.answer6}
+                        </ListGroup.Item>
                       </ListGroup>
                       <ListGroup className="datailedItems">
-                        <ListGroup.Item>{option.getQuestion.question7}</ListGroup.Item>
-                        <ListGroup.Item>Resposta certa: {option.getRightAnswer.answer7}</ListGroup.Item>
-                        <ListGroup.Item>Sua resposta: {option.getUserAnswer.answer7}</ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer7 === option.getUserAnswer.answer7 ? "success" : "danger"}>
+                          {option.getQuestion.question7}
+                        </ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer7 === option.getUserAnswer.answer7 ? "success" : "danger"}>
+                          Resposta certa: {option.getRightAnswer.answer7}
+                        </ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer7 === option.getUserAnswer.answer7 ? "success" : "danger"}>
+                          Sua resposta: {option.getUserAnswer.answer7}
+                        </ListGroup.Item>
                       </ListGroup>
                       <ListGroup className="datailedItems">
-                        <ListGroup.Item>{option.getQuestion.question8}</ListGroup.Item>
-                        <ListGroup.Item>Resposta certa: {option.getRightAnswer.answer8}</ListGroup.Item>
-                        <ListGroup.Item>Sua resposta: {option.getUserAnswer.answer8}</ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer8 === option.getUserAnswer.answer8 ? "success" : "danger"}>
+                          {option.getQuestion.question8}
+                        </ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer8 === option.getUserAnswer.answer8 ? "success" : "danger"}>
+                          Resposta certa: {option.getRightAnswer.answer8}
+                        </ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer8 === option.getUserAnswer.answer8 ? "success" : "danger"}>
+                          Sua resposta: {option.getUserAnswer.answer8}
+                        </ListGroup.Item>
                       </ListGroup>
                       <ListGroup className="datailedItems">
-                        <ListGroup.Item>{option.getQuestion.question9}</ListGroup.Item>
-                        <ListGroup.Item>Resposta certa: {option.getRightAnswer.answer9}</ListGroup.Item>
-                        <ListGroup.Item>Sua resposta: {option.getUserAnswer.answer9}</ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer9 === option.getUserAnswer.answer9 ? "success" : "danger"}>
+                          {option.getQuestion.question9}
+                        </ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer9 === option.getUserAnswer.answer9 ? "success" : "danger"}>
+                          Resposta certa: {option.getRightAnswer.answer9}
+                        </ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer9 === option.getUserAnswer.answer9 ? "success" : "danger"}>
+                          Sua resposta: {option.getUserAnswer.answer9}
+                        </ListGroup.Item>
                       </ListGroup>
                       <ListGroup className="datailedItems">
-                        <ListGroup.Item>{option.getQuestion.question10}</ListGroup.Item>
-                        <ListGroup.Item>Resposta certa: {option.getRightAnswer.answer10}</ListGroup.Item>
-                        <ListGroup.Item>Sua resposta: {option.getUserAnswer.answer10}</ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer10 === option.getUserAnswer.answer10 ? "success" : "danger"}>
+                          {option.getQuestion.question10}
+                        </ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer10 === option.getUserAnswer.answer10 ? "success" : "danger"}>
+                          Resposta certa: {option.getRightAnswer.answer10}
+                        </ListGroup.Item>
+                        <ListGroup.Item variant={option.getRightAnswer.answer10 === option.getUserAnswer.answer10 ? "success" : "danger"}>
+                          Sua resposta: {option.getUserAnswer.answer10}
+                        </ListGroup.Item>
                       </ListGroup>
                       <ListGroup className="datailedItems">
-                        <ListGroup.Item>Nota final: {historyToShow.data[index].finalGrade}</ListGroup.Item>
+                        <ListGroup.Item variant={historyToShow.data[index].finalGrade >= 6 ? "success" : "danger"}>
+                          Nota final: {historyToShow.data[index].finalGrade}
+                          </ListGroup.Item>
                       </ListGroup>
                   </div>
                     }

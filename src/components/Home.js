@@ -22,6 +22,10 @@ function Home() {
     setQuestions('');
     const inputQuestion = document.getElementById('inputQuestion');
     inputQuestion.value = "";
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
   }
   const handleClose = () => setShowResult(false);
 
@@ -64,8 +68,8 @@ function Home() {
   }
   const onClickSaveHistory = () => {
     alert("Prova salva!");
-    axios.get('https://studier-server.onrender.com/saveHistory', {
-    //axios.get('http://localhost:4000/saveHistory', {
+    //axios.get('https://studier-server.onrender.com/saveHistory', {
+    axios.get('http://localhost:4000/saveHistory', {
       params:{
         userId: userId,
         history: history,
@@ -79,8 +83,8 @@ function Home() {
     setSpinner(true);
     const inputQuestion = document.getElementById('inputQuestion');
     setContent(inputQuestion.value);
-    axios.get('https://studier-server.onrender.com/question', {
-    //axios.get('http://localhost:4000/question', {
+    //axios.get('https://studier-server.onrender.com/question', {
+    axios.get('http://localhost:4000/question', {
       params: {
         content: inputQuestion.value
       }
@@ -203,10 +207,17 @@ function Home() {
           <div className='modalFinalGrade'>{`Sua nota é: ${finalGrade}`}</div>
           {
             history ? history.map((eachHystory) => {
-              return <div>
-                <div className='modalQuestion'>{eachHystory.question}</div>
-                <div className='modalUserAnswer'>Sua resposta: {eachHystory.userAnswer}</div>
-                <div className='modalRightAnswer'>Resposta correta: {eachHystory.rightAnswer}</div>
+              return <div className='allResultQuestions'>
+                <div className={`modalQuestion ` + (eachHystory.userAnswer === eachHystory.rightAnswer ? "goodGrade" : "badGrade")}>
+                  {eachHystory.question}
+                  {console.log()}
+                  </div>
+                <div className={`modalUserAnswer ` + (eachHystory.userAnswer === eachHystory.rightAnswer ? "goodGrade" : "badGrade")}>
+                  Sua resposta: {eachHystory.userAnswer}
+                  </div>
+                <div className={`modalRightAnswer ` + (eachHystory.userAnswer === eachHystory.rightAnswer ? "goodGrade" : "badGrade")}>
+                  Resposta correta: {eachHystory.rightAnswer}
+                  </div>
               </div>
             }) : <></>
           }
