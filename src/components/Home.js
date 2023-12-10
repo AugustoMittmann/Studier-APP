@@ -264,7 +264,7 @@ function Home() {
           <Spinner animation="border" role="status" variant='dark'>
             <span className="visually-hidden">Loading...</span>
           </Spinner>
-          <div className='spinnerLabel'>Pode levar cerca de 30 segundos à 1 minuto</div>
+          <div className='spinnerLabel'>Pode levar cerca de 30 segundos</div>
         </div> : <></>
       }
         </Modal.Body>
