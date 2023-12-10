@@ -69,8 +69,8 @@ function Home() {
   }
   const onClickSaveHistory = () => {
     alert("Prova salva!");
-    //axios.get('https://studier-server.onrender.com/saveHistory', {
-    axios.get('http://localhost:4000/saveHistory', {
+    axios.get('https://studier-server.onrender.com/saveHistory', {
+    //axios.get('http://localhost:4000/saveHistory', {
       params:{
         userId: userId,
         history: history,
@@ -84,8 +84,8 @@ function Home() {
     setSpinner(true);
     const inputQuestion = document.getElementById('inputQuestion');
     setContent(inputQuestion.value);
-    //axios.get('https://studier-server.onrender.com/question', {
-    axios.get('http://localhost:4000/question', {
+    axios.get('https://studier-server.onrender.com/question', {
+    //axios.get('http://localhost:4000/question', {
       params: {
         content: inputQuestion.value
       }
@@ -102,7 +102,8 @@ function Home() {
     })
   }
   useEffect(() => {
-		axios.get('http://localhost:4000/connectServer', {})
+    axios.get('https://studier-server.onrender.com/connectServer', {})
+		//axios.get('http://localhost:4000/connectServer', {})
     .then(function () {
       setConnectServer(true);
       return;

@@ -19,8 +19,8 @@ function Header(props) {
       return;
     }
 
-      //axios.get('https://studier-server.onrender.com/create', {
-      axios.get('http://localhost:4000/create', {
+      axios.get('https://studier-server.onrender.com/create', {
+      //axios.get('http://localhost:4000/create', {
         params: {
           name: name.value,
           password: password.value
@@ -47,8 +47,8 @@ function Header(props) {
     const name = document.getElementById('formBasicUser');
     const password = document.getElementById('formBasicPassword');
 
-      //axios.get('https://studier-server.onrender.com/login', {
-      axios.get('http://localhost:4000/login', {
+      axios.get('https://studier-server.onrender.com/login', {
+      //axios.get('http://localhost:4000/login', {
         params: {
           name: name.value,
           password: password.value
@@ -76,8 +76,8 @@ function Header(props) {
     props.setUserId("");
   };
   const onShowHistory = () => {
-    //axios.get('https://studier-server.onrender.com/showHistory', {
-    axios.get('http://localhost:4000/showHistory', {
+    axios.get('https://studier-server.onrender.com/showHistory', {
+    //axios.get('http://localhost:4000/showHistory', {
         params: {
           userId: props.userId
         }
@@ -92,8 +92,8 @@ function Header(props) {
     setHistoryModal(true);
   }
   const onClickDeleteHistory = (id) => {
-    //axios.get('https://studier-server.onrender.com/deleteHistory', {
-    axios.get('http://localhost:4000/deleteHistory', {
+    axios.get('https://studier-server.onrender.com/deleteHistory', {
+    //axios.get('http://localhost:4000/deleteHistory', {
         params: {
           id: id
         }
