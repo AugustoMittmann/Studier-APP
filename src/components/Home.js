@@ -235,9 +235,6 @@ function Home() {
           }
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
           <Button variant="primary" onClick={onClickNewTest}>
             Realizar novo teste
           </Button>
